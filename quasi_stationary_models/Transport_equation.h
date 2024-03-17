@@ -51,7 +51,7 @@ public:
     double get_dt();*/
 
     /// @brief output_data - метод вывода слоев в файл формата csv
-    void output_data(ring_buffer_t<vector<vector<double>>>& buffer, double sum_dt);
+    void output_data(ring_buffer_t<vector<vector<double>>>& buffer, double sum_dt, vector<double>& pressure);
 
 
    /* /// @brief interpolation_flow - метод линейной интерполяции расхода

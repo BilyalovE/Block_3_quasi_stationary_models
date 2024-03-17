@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
 #include <locale.h>
 #include <fstream>
 #include <iomanip>
@@ -18,6 +19,8 @@ class Count_pressure_Eyler
 	double v;
 	/// @param Внутренний диаметр, [м]
 	double inner_d;
+	/// @param Вектор плотности, [кг/м3]
+	vector <double> density;
 	/// @param Вектор вязкости, [м2/с]
 	vector <double> viscosity;
 	/// @param Вектор распределения давления по трубе, [Па]
@@ -26,7 +29,7 @@ class Count_pressure_Eyler
 	double dx;
 
 public:
-	Count_pressure_Eyler(Input_data& input_data_task_1, vector<double>& current_layer);
+	Count_pressure_Eyler(Input_data& input_data_task_1, vector<double>& current_layer_po, vector<double>& current_layer_v, vector<double>& pressure);
 
 	void count_pressure_Eyler();
 };
