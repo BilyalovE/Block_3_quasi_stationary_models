@@ -1,20 +1,20 @@
-﻿#include "Block_1_transport_equation.h"
+﻿#include "Transport_equation.h"
 
 
-Transport_equation::Transport_equation(Input_data& input_data_task_1, int n, int j)
+Transport_equation::Transport_equation(Input_data& input_data_task_1, int j)
 {
      /// @param n - количество точек расчетной сетки;
-    this->n = n;
+    this->n = input_data_task_1.n;
     /// @param j - счетчик слоя
     this->j = j;
     /// @param pipeline_characteristics - параметры трубопровода
-    this->input_data_task_1 = input_data_task_1;
+    m_input_data_task_1 = input_data_task_1;
     /// @param dx - величина шага между узлами расчетной сетки, м;
-    this->dx = pipeline_characteristics.L / (n - 1);
+    this->dx = input_data_task_1.get_dx();
 }
 
 void Transport_equation::method_characteristic(vector<double>& current_layer, vector<double>& previous_layer, 
-                                                        double left_condition) const
+                                                        double left_condition)
 
 {
     // Получение ссылок на текущий и предыдущий слои буфера
@@ -55,7 +55,7 @@ void Transport_equation::method_characteristic(vector<double>& current_layer, ve
    /// @param solver_parameters - структура параметров, необходимых для реализации функции солвера ;
    /// @param buffer - буфер, рассчитанный после солвера;
    /// @param sum_dt - текущее время моделирования
-void Block_1_transport_equation::output_data(ring_buffer_t<vector<vector<double>>>& buffer, double sum_dt) const
+void Transport_equation::output_data(ring_buffer_t<vector<vector<double>>>& buffer, double sum_dt)
 {
     // Используем пространство имен std
     using namespace std;
@@ -97,7 +97,7 @@ void Block_1_transport_equation::output_data(ring_buffer_t<vector<vector<double>
 //    /// @param Q - синтетический временной ряд изменения расхода
 //    vector <double> Q = pipeline_characteristics.Q;
 //    int size_array_Q = pipeline_characteristics.Q.size();
-//    // Проверка наличия элементов в синтеческом ряде при интерполяции
+//    // Проверка наличия элементов в синтетическом ряде при интерполяции
 //    if (size_array_Q > j) {
 //        // Выбор прямой, на которой интерполируется расход
 //        for (int i = 1; i < size_array; i++) {

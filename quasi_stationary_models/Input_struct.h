@@ -5,7 +5,8 @@ struct Input_data {
 	double dn = 0.720;
 	/// @param Толщина стенки трубы, [м]
 	double ds = 0.01;
-	/// @param Метод определния внутреннего диаметра, [м]
+
+	/// @param Метод определения внутреннего диаметра, [м]
 	double get_inner_d() const {
 		return dn - 2 * ds;
 	}
@@ -18,7 +19,7 @@ struct Input_data {
 	/// @param Давление в начале трубы, [Па]
 	double p0 = 6e6;
 	/// @param Скорость перекачки, [м/с]
-	double const v = 0.5;
+	double v = 0.5;
 	/// @param Начальная плотность сырья в трубе, [кг/м3]
 	double initial_density = 900;
 	/// @param Начальная вязкость сырья в трубе, [м2/с]
@@ -26,8 +27,16 @@ struct Input_data {
 	/// @param Длина трубопровода, [м]
 	double L = 500;
 	/// @param Число узлов расчетной сетки
-	int n = 100;
+	int n = 100 + 1;
+
+	/// @brief Метод определения шага расчетной сетки (расстояние между узловыми точками), [м]
 	double get_dx() const {
-		return L / n;
+		return L / (n - 1);
+	}
+	/// @brief Метод определения шага расчетной сетки по времени, [с]
+	double get_dt() const {
+		double dx = get_dx();
+		return dx * v; 
 	}
 };
+
