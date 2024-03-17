@@ -42,18 +42,15 @@ int main()
 	int j = 0;
 	double sum_dt = 0;
 	/// @param Вектор распределения давления по трубе, [Па]
-	vector <double> pressure_current;
-	std::vector <double> pressure(input_data_task_1.n);
+	std::vector <double> pressure_current(input_data_task_1.n);
 	do {
 		Transport_equation transport_equation_task_1(input_data_task_1, j);
 		for (size_t i{ 0 }; i < num_parameters; i++) {
 			transport_equation_task_1.method_characteristic(buffer.current()[i], buffer.previous()[i], input_conditions[i]);
-			/// Передаю текущий слой
-			Count_pressure_Eyler count_pressure_Eyler_task_1(input_data_task_1, buffer.current()[0], buffer.current()[1], pressure_current);
-			count_pressure_Eyler_task_1.count_pressure_Eyler();
 		}
-		
-
+		/// Передаю текущий слой
+		Count_pressure_Eyler count_pressure_Eyler_task_1(input_data_task_1, buffer.previous()[0], buffer.previous()[1], pressure_current);
+		pressure_current = count_pressure_Eyler_task_1.count_pressure_Eyler();
 		transport_equation_task_1.output_data(buffer, sum_dt, pressure_current);
 		buffer.advance(1);
 		sum_dt += input_data_task_1.get_dt();
