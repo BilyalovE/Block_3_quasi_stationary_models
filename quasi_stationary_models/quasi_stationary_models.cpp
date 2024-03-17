@@ -1,17 +1,17 @@
 ﻿/*!
 	\ brief Блок 3 - Реализация квазистационарного гидравлического расчета с учетом движения партий
 	\ author Bilyalov Eldar
-	\ version 1 - Решение задачи 1
+	\ version 1 - Решение задачи 1 (расчет давления во всех точках расчетной сетки трубы )
 	\ date 11.03.2024
 */
 #include <iostream>
 #include <vector>
 #include <iomanip>
-#include <fixed/fixed.h>
+#include <fixed/fixed.h> 
 #include <pde_solvers/pde_solvers.h>
 #include "Input_struct.h"
 #include "Transport_equation.h"
-
+#include "Count_pressure_Eyler.h"
 
 
 int main()
@@ -46,6 +46,8 @@ int main()
 		for (size_t i{ 0 }; i < num_parameters; i++) {
 			transport_equation_task_1.method_characteristic(buffer.current()[i], buffer.previous()[i], input_conditions[i]);
 		}
+		/// передаю слой по вязкости buffer.current()[1] 
+		Count_pressure_Eyler count_pressure_Eyler_task_1(input_data_task_1, buffer.current()[1]);
 		transport_equation_task_1.output_data(buffer, sum_dt);
 		buffer.advance(1);
 		sum_dt += input_data_task_1.get_dt();

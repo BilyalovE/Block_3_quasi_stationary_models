@@ -8,14 +8,13 @@ Transport_equation::Transport_equation(Input_data& input_data_task_1, int j)
     /// @param j - счетчик слоя
     this->j = j;
     /// @param pipeline_characteristics - параметры трубопровода
-    m_input_data_task_1 = input_data_task_1;
+    input_data_task_1 = input_data_task_1;
     /// @param dx - величина шага между узлами расчетной сетки, м;
     this->dx = input_data_task_1.get_dx();
 }
 
 void Transport_equation::method_characteristic(vector<double>& current_layer, vector<double>& previous_layer, 
                                                         double left_condition)
-
 {
     // Получение ссылок на текущий и предыдущий слои буфера
     for (size_t i = 1; i < n; i++)
@@ -26,6 +25,10 @@ void Transport_equation::method_characteristic(vector<double>& current_layer, ve
     // Для этого сместим индекс текущего слоя в буфере на единицу
     current_layer[0] = left_condition;
 }
+
+
+
+
 
 ///// @brief get_speed - метод расчета скорости по расходу (расход может быть интерполирован)
 //double Block_1_transport_equation::get_speed() {

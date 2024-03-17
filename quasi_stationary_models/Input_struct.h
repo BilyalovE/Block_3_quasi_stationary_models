@@ -38,5 +38,10 @@ struct Input_data {
 		double dx = get_dx();
 		return dx * v; 
 	}
+	/// @brief Метод расчета относительной шероховатости
+	double get_relative_roughness() const {
+		double inner_diameter = get_inner_d();
+		return delta / inner_diameter;
+	}
 };
 
