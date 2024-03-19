@@ -75,15 +75,16 @@ TEST(Block_3, Task_QP_2) {
 	int num_parameters = 2;
 
 	/// @param Синтетический вектор плотности входных партий (краевые условия), [кг/м3]
-	vector <double> density = { 900, 880, 880, 890, 890, 890, 880, 880 };
+	vector <double> density = { 900, 880, 880, 890, 890, 880, 880 };
 	/// @param Синтетический вектор вязкости входных партий (краевые условия), [м2/с]
 	vector <double> viscosity = { 15e-6, 13e-6, 13e-6, 14e-6, 14e-6, 13e-6, 13e-6 };
 	/// @param Синтетический временной ряд для краевых условий, [с]
 	vector <double> time_input_parties = { 0, 60, 120, 180, 240, 300, 360 };
 	/// @param Синтетическая матрица параметров нефти входных партий
-	vector <vector <double>> input_conditions(3, (density, viscosity, time_input_parties));
+	vector <vector <double>> input_conditions(3, vector<double>(density.size()));
+	input_conditions = { density, viscosity, time_input_parties };
 	/// @param Время моделирования
-	double T = 400;
+	double T = 2000;
 	/// @param j - счетчик слоев
 	int j = 0;
 	double sum_dt = 0;
