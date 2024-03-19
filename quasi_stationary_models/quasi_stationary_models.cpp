@@ -89,5 +89,30 @@ TEST(Block_3, Task_QP_2) {
 	double sum_dt = 0;
 	/// @param Вектор распределения давления по трубе, [Па]
 	std::vector <double> pressure_current(input_data_task_2.n);
+	do {
+		Transport_equation transport_equation_task_2(input_data_task_2, j);
+		// Проверка выхода за границы массива входных параметров нефти
+		if (j < density.size()) {
+			for (size_t i{ 0 }; i < num_parameters; i++) {
+				transport_equation_task_2.method_characteristic(buffer.current()[i], buffer.previous()[i], input_conditions[i][j]);
+			}
+		}
+		// Если элементы в векторе входных партий закончились, то значит труба пустая
+		else {
+			for (size_t i{ 0 }; i < num_parameters; i++) {
+				double empty_pipe{ 0 };
+				transport_equation_task_2.method_characteristic(buffer.current()[i], buffer.previous()[i], empty_pipe);
+			}
+		}
+		/// Передаю текущий слой для дополнительного расчета распределения давления по трубе методом Эйлера
+		Count_pressure_Eyler count_pressure_Eyler_task_1(input_data_task_2, buffer.previous()[0], buffer.previous()[1]);
+		pressure_current = count_pressure_Eyler_task_1.count_pressure_Eyler(pressure_current);
+		/// Вывод данных
+		transport_equation_task_2.output_data(buffer, sum_dt, pressure_current);
+		buffer.advance(1);
+		/// Увеличение временного шага метода характеристик
+		sum_dt += transport_equation_task_2.get_dt();
+		j++;
+	} while (sum_dt <= T);
 }
  
