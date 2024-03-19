@@ -1,4 +1,7 @@
 #pragma once
+#include <cmath>
+#include <vector>
+#include <pde_solvers/pde_solvers.h>
 /// @brief Параметры трубы
 struct Input_data {
 	/// @param Внешний диаметр трубы, [м]
@@ -28,7 +31,13 @@ struct Input_data {
 	double L = 500;
 	/// @param Число узлов расчетной сетки
 	int n = 5 + 1;
+	/// @param Синтетический ряд давлений в начале трубы, [Па]
+	vector <double> pressure_0 = { 6e6, 5.8e6, 5.8e6, 5.9e6, 5.9e6, 5.8e6, 5.8e6 };
+	/// @param Синтетический ряд объемного расхода перекачки, [м^3,c]
+	vector <double> volumetric_flow = { 0.192325, 0.200000, 0.210000, 0.200000, 0.180000, 0.210000, 0.210000 };
 
+	/// @param Синтетический временной ряд для технологического режима перекачки, [с]
+	vector <double> time = { 0, 60, 120, 180, 240, 300, 360 };
 	/// @brief Метод определения шага расчетной сетки (расстояние между узловыми точками), [м]
 	double get_dx() const {
 		return L / (n - 1);
@@ -42,6 +51,10 @@ struct Input_data {
 	double get_relative_roughness() const {
 		double inner_diameter = get_inner_d();
 		return delta / inner_diameter;
+	}
+	double get_inner_square() const {
+		double inner_diameter = get_inner_d();
+		return M_PI * pow(inner_diameter, 2) / 4;
 	}
 };
 

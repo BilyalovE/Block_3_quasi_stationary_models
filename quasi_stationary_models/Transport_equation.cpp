@@ -1,16 +1,16 @@
 ﻿#include "Transport_equation.h"
 
 
-Transport_equation::Transport_equation(Input_data& input_data_task_1, int j)
+Transport_equation::Transport_equation(Input_data& input_data_task, int j)
 {
      /// @param n - количество точек расчетной сетки;
-    this->n = input_data_task_1.n;
+    this->n = input_data_task.n;
     /// @param j - счетчик слоя
     this->j = j;
-    /// @param pipeline_characteristics - параметры трубопровода
-    input_data_task_1 = input_data_task_1;
+    /// @param input_data_task - параметры трубопровода
+    this->input_data_task = input_data_task;
     /// @param dx - величина шага между узлами расчетной сетки, м;
-    this->dx = input_data_task_1.get_dx();
+    this->dx = input_data_task.get_dx();
 }
 
 void Transport_equation::method_characteristic(vector<double>& current_layer, vector<double>& previous_layer, 
@@ -30,28 +30,27 @@ void Transport_equation::method_characteristic(vector<double>& current_layer, ve
 
 
 
-///// @brief get_speed - метод расчета скорости по расходу (расход может быть интерполирован)
-//double Block_1_transport_equation::get_speed() {
-//    double square = pipeline_characteristics.get_inner_square();
-//    double speed{};
-//    if (j == 0) {
-//        speed = (pipeline_characteristics.Q)[0] / square;
-//    }
-//    else {
-//       double interpolation_Q = interpolation_flow();
-//       speed = interpolation_Q / square;
-//    }
-//    return speed;
-//}
-//
-///// @brief get_dt - метод получения шага времени dt
-//double Block_1_transport_equation::get_dt()
-//{
-//    double speed = get_speed();
-//    dt = dx / speed;
-//  
-//    return dt;
-//}
+/// @brief get_speed - метод расчета скорости по расходу (расход может быть интерполирован)
+double Transport_equation::get_speed() {
+    double square = input_data_task.get_inner_square();
+    double speed{};
+    if (j == 0) {
+        speed = (input_data_task.volumetric_flow)[0] / square;
+    }
+    else {
+       double interpolation_Q = interpolation_flow();
+       speed = interpolation_Q / square;
+    }
+    return speed;
+}
+
+/// @brief get_dt - метод получения шага времени dt
+double Transport_equation::get_dt()
+{
+    double speed = get_speed();
+    dt = dx / speed;
+    return dt;
+}
 
 /// @brief output_data - метод вывода слоев в файл формата csv
    /// @param i - счётчик слоев;
@@ -88,30 +87,30 @@ void Transport_equation::output_data(ring_buffer_t<vector<vector<double>>>& buff
     }
 }
 
-///// @brief interpolation_flow - метод линейной интерполяции расхода
-//double Block_1_transport_equation::interpolation_flow()
-//{
-//    /// @param interpolation_Q - интерполированный расход
-//    double interpolation_Q{};
-//    /// @param t - синтетический временной ряд времени изменения расхода
-//    vector <double> t = pipeline_characteristics.t;
-//    /// @param size_array - размер синтетического временного массива
-//    int size_array = pipeline_characteristics.t.size();
-//    /// @param Q - синтетический временной ряд изменения расхода
-//    vector <double> Q = pipeline_characteristics.Q;
-//    int size_array_Q = pipeline_characteristics.Q.size();
-//    // Проверка наличия элементов в синтетическом ряде при интерполяции
-//    if (size_array_Q > j) {
-//        // Выбор прямой, на которой интерполируется расход
-//        for (int i = 1; i < size_array; i++) {
-//            if (dt >= t[i - 1] && dt <= t[i]) {
-//                interpolation_Q = (dt - t[i - 1]) / (t[i] - t[i - 1]) * (Q[i] - Q[i - 1]) + Q[i - 1];
-//            }
-//        }
-//    }
-//    // Расход становится постоянным
-//    else {
-//        interpolation_Q = (pipeline_characteristics.Q)[size_array_Q - 1];
-//    }
-//    return interpolation_Q;
-//}
+/// @brief interpolation_flow - метод линейной интерполяции расхода
+double Transport_equation::interpolation_flow()
+{
+    /// @param interpolation_Q - интерполированный расход
+    double interpolation_Q{};
+    /// @param t - синтетический временной ряд времени изменения расхода
+    vector <double> t = input_data_task.time;
+    /// @param size_array - размер синтетического временного массива
+    int size_array = input_data_task.time.size();  
+    /// @param Q - синтетический временной ряд изменения расхода
+    vector <double> Q = input_data_task.volumetric_flow;
+    int size_array_Q = input_data_task.volumetric_flow.size();
+    // Проверка наличия элементов в синтетическом ряде при интерполяции
+    if (size_array_Q > j) {
+        // Выбор прямой, на которой интерполируется расход
+        for (int i = 1; i < size_array; i++) {
+            if (dt >= t[i - 1] && dt <= t[i]) {
+                interpolation_Q = (dt - t[i - 1]) / (t[i] - t[i - 1]) * (Q[i] - Q[i - 1]) + Q[i - 1];
+            }
+        }
+    }
+    // Расход становится постоянным
+    else {
+        interpolation_Q = (input_data_task.volumetric_flow)[size_array_Q - 1];
+    }
+    return interpolation_Q;
+}

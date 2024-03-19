@@ -29,8 +29,8 @@ class Count_pressure_Eyler
 	double dx;
 
 public:
-	Count_pressure_Eyler(Input_data& input_data_task_1, vector<double>& current_layer_po, vector<double>& current_layer_v, vector<double>& pressure);
+	Count_pressure_Eyler(Input_data& input_data_task_1, vector<double>& current_layer_po, vector<double>& current_layer_v);
 
-	vector <double> count_pressure_Eyler();
+	vector <double> count_pressure_Eyler(vector<double>& pressure);
 };
 

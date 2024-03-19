@@ -1,6 +1,6 @@
 #include "Count_pressure_Eyler.h"
 
-Count_pressure_Eyler::Count_pressure_Eyler(Input_data& input_data_task_1, vector<double>& current_layer_po, vector<double>& current_layer_v, vector<double>& pressure)
+Count_pressure_Eyler::Count_pressure_Eyler(Input_data& input_data_task_1, vector<double>& current_layer_po, vector<double>& current_layer_v)
 {
 	this->density = current_layer_po;
 	this->viscosity = current_layer_v;
@@ -11,7 +11,7 @@ Count_pressure_Eyler::Count_pressure_Eyler(Input_data& input_data_task_1, vector
 	this->dx = input_data_task_1.get_dx();
 }
 
-vector <double> Count_pressure_Eyler::count_pressure_Eyler()
+vector <double> Count_pressure_Eyler::count_pressure_Eyler(vector<double>& pressure)
 {
 	/// @param Вектор чисел Рейнольдса на текущем слое метода характеристик
 	vector <double> Re (input_data_task_1.n);

@@ -187,7 +187,6 @@
   <ItemGroup>
     <ClCompile Include="Count_pressure_Eyler.cpp" />
     <ClCompile Include="Hydraulic_resistance_coefficient.cpp" />
-    <ClCompile Include="Task_QP_Eyler.cpp" />
     <ClCompile Include="Transport_equation.cpp" />
     <ClCompile Include="quasi_stationary_models.cpp" />
   </ItemGroup>
