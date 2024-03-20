@@ -193,6 +193,7 @@
   <ItemGroup>
     <ClInclude Include="Count_pressure_Eyler.h" />
     <ClInclude Include="Hydraulic_resistance_coefficient.h" />
+    <ClInclude Include="Time_series.h" />
     <ClInclude Include="Transport_equation.h" />
     <ClInclude Include="Input_struct.h" />
   </ItemGroup>

@@ -9,7 +9,9 @@
 #include <fixed/fixed.h>
 #include <pde_solvers/pde_solvers.h>
 #include "Input_struct.h"
+#include "Time_series.h"
 #include "Hydraulic_resistance_coefficient.h"
+#include "Transport_equation.h"
 
 class Count_pressure_Eyler
 {
@@ -27,10 +29,12 @@ class Count_pressure_Eyler
 	vector <double> pressure;
 	/// @param Шаг расчетной сетки (расстояние между узловыми точками), [м]
 	double dx;
+	/// @param Синтетический временной ряд изменения параметров
+	Synthetic_time_series synthetic_time;
 
 public:
-	Count_pressure_Eyler(Input_data& input_data_task_1, vector<double>& current_layer_po, vector<double>& current_layer_v);
+	Count_pressure_Eyler(Input_data& input_data_task_1, Synthetic_time_series& synthetic_time, vector<double>& current_layer_po, vector<double>& current_layer_v);
 
-	vector <double> count_pressure_Eyler(vector<double>& pressure);
+	vector <double> count_pressure_Eyler(vector<double>& pressure, int j, double dt);
 };
 
