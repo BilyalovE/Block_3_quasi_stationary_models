@@ -2,11 +2,11 @@
 #include <vector>
 struct Synthetic_time_series {
 	/// @param Синтетический вектор плотности входных партий (краевые условия), [кг/м3]
-	std::vector <double> density = { 900, 880, 880, 890, 890, 880, 880 };
+	std::vector <double> density = { 900, 880, 880, 890, 600, 880, 880 };
 	/// @param Синтетический вектор вязкости входных партий (краевые условия), [м2/с]
-	std::vector <double> viscosity = { 15e-6, 13e-6, 13e-6, 14e-6, 14e-6, 13e-6, 13e-6 };
+	std::vector <double> viscosity = { 15e-6, 13e-6, 13e-6, 14e-6, 10e-6, 13e-6, 13e-6 };
 	/// @param Синтетический временной ряд для краевых условий, [с]
-	std::vector <double> time_input_parties = { 0, 60, 120, 180, 240, 300, 360 };
+	std::vector <double> time_input_parties = { 0, 205, 470, 600, 900, 980, 1256 };
 	/// @param Синтетический ряд давлений в начале трубы, [Па]
 	std::vector <double> pressure_0 = { 6e6, 5.8e6, 5.8e6, 5.9e6, 5.9e6, 5.8e6, 5.8e6 };
 	/// @param Синтетический ряд объемного расхода перекачки, [м^3,c]

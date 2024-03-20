@@ -82,7 +82,7 @@ TEST(Block_3, Task_QP_2) {
 	vector <vector <double>> input_conditions(3, vector<double>(synthetic_time_2.density.size()));
 	input_conditions = { synthetic_time_2.density, synthetic_time_2.viscosity, synthetic_time_2.time_input_parties };
 	/// @param Время моделирования
-	double T = 2000;
+	double T = 4000;
 	/// @param j - счетчик слоев
 	int j = 0;
 	double sum_dt = 0;
@@ -90,11 +90,27 @@ TEST(Block_3, Task_QP_2) {
 	std::vector <double> pressure_current(input_data_task_2.n);
 	do {
 		Transport_equation transport_equation_task_2(input_data_task_2, synthetic_time_2, j);
+		
+		
+		/// Передаю текущий слой для дополнительного расчета распределения давления по трубе методом Эйлера
+		Count_pressure_Eyler count_pressure_Eyler_task_1(input_data_task_2, synthetic_time_2, buffer.previous()[0], buffer.previous()[1]);
+		pressure_current = count_pressure_Eyler_task_1.count_pressure_Eyler(pressure_current, j, sum_dt);
+		/// Вывод данных
+		transport_equation_task_2.output_data(buffer, sum_dt, pressure_current);
+		/// Увеличение временного шага метода характеристик
+		sum_dt += transport_equation_task_2.get_dt();
+		j++;
 		// Проверка выхода за границы массива входных параметров нефти
 		if (j < synthetic_time_2.density.size()) {
 			for (size_t i{ 0 }; i < num_parameters; i++) {
+				Transport_equation interpolation_input_conditions(input_data_task_2, synthetic_time_2, j);
+				if (i == 0) {
+					input_conditions[i][j] = interpolation_input_conditions.line_interpolation(synthetic_time_2.density, synthetic_time_2.time_input_parties, sum_dt);
+				}
+				else {
+					input_conditions[i][j] = interpolation_input_conditions.line_interpolation(synthetic_time_2.viscosity, synthetic_time_2.time_input_parties, sum_dt);
+				}
 				transport_equation_task_2.method_characteristic(buffer.current()[i], buffer.previous()[i], input_conditions[i][j]);
-
 			}
 		}
 		// Если элементы в векторе входных партий закончились, то значит труба пустая
@@ -104,16 +120,8 @@ TEST(Block_3, Task_QP_2) {
 				transport_equation_task_2.method_characteristic(buffer.current()[i], buffer.previous()[i], empty_pipe);
 			}
 		}
-		
-		/// Передаю текущий слой для дополнительного расчета распределения давления по трубе методом Эйлера
-		Count_pressure_Eyler count_pressure_Eyler_task_1(input_data_task_2, synthetic_time_2, buffer.previous()[0], buffer.previous()[1]);
-		pressure_current = count_pressure_Eyler_task_1.count_pressure_Eyler(pressure_current, j, sum_dt);
-		/// Вывод данных
-		transport_equation_task_2.output_data(buffer, sum_dt, pressure_current);
-		/// Увеличение временного шага метода характеристик
-		sum_dt += transport_equation_task_2.get_dt();
 		buffer.advance(1);
-		j++;
+		
 	} while (sum_dt <= T);
 }
  

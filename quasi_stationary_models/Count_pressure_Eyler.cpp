@@ -37,7 +37,7 @@ vector <double> Count_pressure_Eyler::count_pressure_Eyler(vector<double>& press
 
 	if (j == 0) {
 		/// @param pressure[0] - давление в начале трубы (граничное условие), [Па]
-		pressure[0] = input_data_task_1.p0;
+ 		pressure[0] = input_data_task_1.p0;
 	}
 	else {
 		Transport_equation interpolation_p0(input_data_task_1, synthetic_time, j);

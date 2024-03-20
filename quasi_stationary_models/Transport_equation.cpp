@@ -6,7 +6,7 @@ Transport_equation::Transport_equation(Input_data& input_data_task, Synthetic_ti
 {
      /// @param n - количество точек расчетной сетки;
     this->n = input_data_task.n;
-    /// @param j - счетчик слоя
+    /// @param j - счетчик слоя 
     this->j = j;
     /// @param input_data_task - исходные данные
     this->input_data_task = input_data_task;
