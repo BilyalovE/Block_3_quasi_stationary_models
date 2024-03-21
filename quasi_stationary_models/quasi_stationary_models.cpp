@@ -93,7 +93,7 @@ TEST(Block_3, Task_QP_2) {
 		
 		
 		/// Передаю текущий слой для дополнительного расчета распределения давления по трубе методом Эйлера
-		Count_pressure_Eyler count_pressure_Eyler_task_1(input_data_task_2, synthetic_time_2, buffer.previous()[0], buffer.previous()[1]);
+		Count_pressure_Eyler count_pressure_Eyler_task_1(input_data_task_2, synthetic_time_2, buffer.current()[0], buffer.current()[1]);
 		pressure_current = count_pressure_Eyler_task_1.count_pressure_Eyler(pressure_current, j, sum_dt);
 		/// Вывод данных
 		transport_equation_task_2.output_data(buffer, sum_dt, pressure_current);
