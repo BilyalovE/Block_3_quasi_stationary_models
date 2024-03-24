@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <cmath>
 #include <vector>
 #include <pde_solvers/pde_solvers.h>

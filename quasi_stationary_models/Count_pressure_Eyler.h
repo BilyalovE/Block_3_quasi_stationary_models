@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <string>
 #include <vector>
@@ -15,21 +15,21 @@
 
 class Count_pressure_Eyler
 {
-	/// @param ��������� �����
+	/// @param Параметры трубы
 	Input_data input_data_task_1;
-	/// @param �������� ���������, [�/�]
+	/// @param Скорость перекачки, [м/с]
 	double v;
-	/// @param ���������� �������, [�]
+	/// @param Внутренний диаметр, [м]
 	double inner_d;
-	/// @param ������ ���������, [��/�3]
+	/// @param Вектор плотности, [кг/м3]
 	vector <double> density;
-	/// @param ������ ��������, [�2/�]
+	/// @param Вектор вязкости, [м2/с]
 	vector <double> viscosity;
-	/// @param ������ ������������� �������� �� �����, [��]
+	/// @param Вектор распределения давления по трубе, [Па]
 	vector <double> pressure;
-	/// @param ��� ��������� ����� (���������� ����� �������� �������), [�]
+	/// @param Шаг расчетной сетки (расстояние между узловыми точками), [м]
 	double dx;
-	/// @param ������������� ��������� ��� ��������� ����������
+	/// @param Синтетический временной ряд изменения параметров
 	Synthetic_time_series synthetic_time;
 
 public:
