@@ -58,8 +58,4 @@ public:
     /// @brief line_interpolation - - метод линейной интерполяции
     /// @return interpolation_param - интерполированный параметр
     double line_interpolation(vector <double> array_param, vector <double> time, double dt);
-
-
-    /// @brief interpolation_flow - метод линейной интерполяции расхода
-    double interpolation_flow();
 };

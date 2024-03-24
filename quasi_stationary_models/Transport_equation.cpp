@@ -116,30 +116,4 @@ double Transport_equation::line_interpolation(vector <double> array_param, vecto
     return interpolation_param;
 }
 
-///// @brief interpolation_flow - метод линейной интерполяции расхода
-//double Transport_equation::interpolation_flow()
-//{
-//    /// @param interpolation_Q - интерполированный расход
-//    double interpolation_Q{};
-//    /// @param t - синтетический временной ряд времени изменения расхода
-//    vector <double> t = synthetic_time_1.time;
-//    /// @param size_array - размер синтетического временного массива
-//    int size_array = synthetic_time_1.time.size();
-//    /// @param Q - синтетический временной ряд изменения расхода
-//    vector <double> Q = synthetic_time_1.volumetric_flow;
-//    int size_array_Q = input_data_task.volumetric_flow.size();
-//    // Проверка наличия элементов в синтетическом ряде при интерполяции
-//    if (size_array_Q > j) {
-//        // Выбор прямой, на которой интерполируется расход
-//        for (int i = 1; i < size_array; i++) {
-//            if (dt >= t[i - 1] && dt <= t[i]) {
-//                interpolation_Q = (dt - t[i - 1]) / (t[i] - t[i - 1]) * (Q[i] - Q[i - 1]) + Q[i - 1];
-//            }
-//        }
-//    }
-//    // Расход становится постоянным
-//    else {
-//        interpolation_Q = (input_data_task.volumetric_flow)[size_array_Q - 1];
-//    }
-//    return interpolation_Q;
-//}
+
