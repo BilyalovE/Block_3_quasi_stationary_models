@@ -13,7 +13,7 @@
 #include "Hydraulic_resistance_coefficient.h"
 #include "Transport_equation.h"
 
-class Count_pressure_Eyler
+class Count_pressure_Eyler_Task_2
 {
 	/// @param Параметры трубы
 	Input_data input_data_task_1;
@@ -33,7 +33,7 @@ class Count_pressure_Eyler
 	Synthetic_time_series synthetic_time;
 
 public:
-	Count_pressure_Eyler(Input_data& input_data_task_1, Synthetic_time_series& synthetic_time, vector<double>& current_layer_po, vector<double>& current_layer_v);
+	Count_pressure_Eyler_Task_2(Input_data& input_data_task_1, Synthetic_time_series& synthetic_time, vector<double>& current_layer_po, vector<double>& current_layer_v);
 
 	vector <double> count_pressure_Eyler(vector<double>& pressure, int j, double dt);
 };
