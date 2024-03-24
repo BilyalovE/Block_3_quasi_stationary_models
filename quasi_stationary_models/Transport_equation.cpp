@@ -61,7 +61,7 @@ double Transport_equation::get_dt()
    /// @param solver_parameters - структура параметров, необходимых для реализации функции солвера ;
    /// @param buffer - буфер, рассчитанный после солвера;
    /// @param sum_dt - текущее время моделирования
-void Transport_equation::output_data(ring_buffer_t<vector<vector<double>>>& buffer, double sum_dt, vector<double>& pressure)
+void Transport_equation::output_data(std::string output_name, ring_buffer_t<vector<vector<double>>>& buffer, double sum_dt, vector<double>& pressure)
 {
     // Используем пространство имен std
     using namespace std;
@@ -69,7 +69,7 @@ void Transport_equation::output_data(ring_buffer_t<vector<vector<double>>>& buff
     vector<vector<double>>& previous_layer = buffer.previous();
     //1 слой с записью заголовка
     if (j == 0) {
-        ofstream outFile("Output.csv");
+        ofstream outFile(output_name + ".csv");
         outFile << "Время,Координата,Плотность,Сера,Давление" << endl;
         // Записать значения текущего слоя в файл
         for (size_t i = 0; i < previous_layer[0].size(); i++) {
@@ -81,7 +81,7 @@ void Transport_equation::output_data(ring_buffer_t<vector<vector<double>>>& buff
     }
     //последующие слои
     else {
-        ofstream outFile("Output.csv", ios::app);
+        ofstream outFile(output_name + ".csv", ios::app);
         // Записать значения текущего слоя в файл
         for (size_t i = 0; i < previous_layer[0].size(); i++) {
             outFile << sum_dt << "," << i * dx << "," << previous_layer[0][i] << "," << previous_layer[1][i] << "," << pressure[i] << endl;

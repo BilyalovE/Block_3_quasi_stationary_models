@@ -53,7 +53,7 @@ public:
     double get_dt();
 
     /// @brief output_data - метод вывода слоев в файл формата csv
-    void output_data(ring_buffer_t<vector<vector<double>>>& buffer, double sum_dt, vector<double>& pressure);
+    void output_data(std::string output_name, ring_buffer_t<vector<vector<double>>>& buffer, double sum_dt, vector<double>& pressure);
 
     /// @brief line_interpolation - - метод линейной интерполяции
     /// @return interpolation_param - интерполированный параметр

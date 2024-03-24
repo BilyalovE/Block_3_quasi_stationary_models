@@ -54,7 +54,7 @@ TEST(Block_3, Task_QP_1)
 		/// Передаю текущий слой
 		Count_pressure_Eyler_Task_1 count_pressure_Eyler_task_1(input_data_task_1, buffer.current()[0], buffer.current()[1], pressure_current);
 		pressure_current = count_pressure_Eyler_task_1.count_pressure_Eyler();
-		transport_equation_task_1.output_data(buffer, sum_dt, pressure_current);
+		transport_equation_task_1.output_data("Output_task_1", buffer, sum_dt, pressure_current);
 		buffer.advance(1);
 		sum_dt += input_data_task_1.get_dt();
 		j++;
@@ -97,7 +97,7 @@ TEST(Block_3, Task_QP_2) {
 		Count_pressure_Eyler_Task_2 count_pressure_Eyler_task_2(input_data_task_2, synthetic_time_2, buffer.current()[0], buffer.current()[1]);
 		pressure_current = count_pressure_Eyler_task_2.count_pressure_Eyler(pressure_current, j, sum_dt);
 		/// Вывод данных
-		transport_equation_task_2.output_data(buffer, sum_dt, pressure_current);
+		transport_equation_task_2.output_data("Output_task_2", buffer, sum_dt, pressure_current);
 		/// Увеличение временного шага метода характеристик
 		sum_dt += transport_equation_task_2.get_dt();
 		j++;
