@@ -25,7 +25,7 @@ class Transport_equation
     /// @param speed - скорость движения нефти
     double speed;
     /// @param pipeline_characteristics - параметры трубопровода
-    Input_data m_input_data_task_1;
+    Input_data input_data_task_1;
 
 public:
     /// @brief Конструктор класса Block_1
@@ -42,6 +42,8 @@ public:
     void method_characteristic(vector<double>& current_layer, vector<double>& previous_layer, double left_condition);
 
 
+ 
+
     /*/// @brief get_speed - метод расчета скорости по расходу (расход может быть интерполирован)
     double get_speed();
     
@@ -49,7 +51,7 @@ public:
     double get_dt();*/
 
     /// @brief output_data - метод вывода слоев в файл формата csv
-    void output_data(ring_buffer_t<vector<vector<double>>>& buffer, double sum_dt);
+    void output_data(ring_buffer_t<vector<vector<double>>>& buffer, double sum_dt, vector<double>& pressure);
 
 
    /* /// @brief interpolation_flow - метод линейной интерполяции расхода

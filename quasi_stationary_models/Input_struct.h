@@ -27,7 +27,7 @@ struct Input_data {
 	/// @param Длина трубопровода, [м]
 	double L = 500;
 	/// @param Число узлов расчетной сетки
-	int n = 100 + 1;
+	int n = 5 + 1;
 
 	/// @brief Метод определения шага расчетной сетки (расстояние между узловыми точками), [м]
 	double get_dx() const {
@@ -37,6 +37,11 @@ struct Input_data {
 	double get_dt() const {
 		double dx = get_dx();
 		return dx * v; 
+	}
+	/// @brief Метод расчета относительной шероховатости
+	double get_relative_roughness() const {
+		double inner_diameter = get_inner_d();
+		return delta / inner_diameter;
 	}
 };
 

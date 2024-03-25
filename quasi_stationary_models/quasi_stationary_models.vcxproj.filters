@@ -18,15 +18,30 @@
     <ClCompile Include="quasi_stationary_models.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Block_1_transport_equation.cpp">
+    <ClCompile Include="Transport_equation.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Task_QP_Eyler.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Count_pressure_Eyler.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Hydraulic_resistance_coefficient.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Block_1_transport_equation.h">
+    <ClInclude Include="Input_struct.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Input_struct.h">
+    <ClInclude Include="Transport_equation.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Count_pressure_Eyler.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Hydraulic_resistance_coefficient.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

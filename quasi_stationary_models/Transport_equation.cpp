@@ -8,14 +8,13 @@ Transport_equation::Transport_equation(Input_data& input_data_task_1, int j)
     /// @param j - счетчик слоя
     this->j = j;
     /// @param pipeline_characteristics - параметры трубопровода
-    m_input_data_task_1 = input_data_task_1;
+    input_data_task_1 = input_data_task_1;
     /// @param dx - величина шага между узлами расчетной сетки, м;
     this->dx = input_data_task_1.get_dx();
 }
 
 void Transport_equation::method_characteristic(vector<double>& current_layer, vector<double>& previous_layer, 
                                                         double left_condition)
-
 {
     // Получение ссылок на текущий и предыдущий слои буфера
     for (size_t i = 1; i < n; i++)
@@ -26,6 +25,10 @@ void Transport_equation::method_characteristic(vector<double>& current_layer, ve
     // Для этого сместим индекс текущего слоя в буфере на единицу
     current_layer[0] = left_condition;
 }
+
+
+
+
 
 ///// @brief get_speed - метод расчета скорости по расходу (расход может быть интерполирован)
 //double Block_1_transport_equation::get_speed() {
@@ -55,7 +58,7 @@ void Transport_equation::method_characteristic(vector<double>& current_layer, ve
    /// @param solver_parameters - структура параметров, необходимых для реализации функции солвера ;
    /// @param buffer - буфер, рассчитанный после солвера;
    /// @param sum_dt - текущее время моделирования
-void Transport_equation::output_data(ring_buffer_t<vector<vector<double>>>& buffer, double sum_dt)
+void Transport_equation::output_data(ring_buffer_t<vector<vector<double>>>& buffer, double sum_dt, vector<double>& pressure)
 {
     // Используем пространство имен std
     using namespace std;
@@ -64,10 +67,10 @@ void Transport_equation::output_data(ring_buffer_t<vector<vector<double>>>& buff
     //1 слой с записью заголовка
     if (j == 0) {
         ofstream outFile("Output.csv");
-        outFile << "Время,Координата,Плотность,Сера" << endl;
+        outFile << "Время,Координата,Плотность,Сера,Давление" << endl;
         // Записать значения текущего слоя в файл
         for (size_t i = 0; i < previous_layer[0].size(); i++) {
-            outFile << sum_dt << "," << i * dx << "," << previous_layer[0][i] << "," << previous_layer[1][i] << endl;
+            outFile << sum_dt << "," << i * dx << "," << previous_layer[0][i] << "," << previous_layer[1][i] << "," << pressure[i ]<< endl;
             
 
         }
@@ -78,7 +81,7 @@ void Transport_equation::output_data(ring_buffer_t<vector<vector<double>>>& buff
         ofstream outFile("Output.csv", ios::app);
         // Записать значения текущего слоя в файл
         for (size_t i = 0; i < previous_layer[0].size(); i++) {
-            outFile << sum_dt << "," << i * dx << "," << previous_layer[0][i] << "," << previous_layer[1][i] << endl;
+            outFile << sum_dt << "," << i * dx << "," << previous_layer[0][i] << "," << previous_layer[1][i] << "," << pressure[i] << endl;
 
         }
         outFile.close();

@@ -1,17 +1,17 @@
 ﻿/*!
 	\ brief Блок 3 - Реализация квазистационарного гидравлического расчета с учетом движения партий
 	\ author Bilyalov Eldar
-	\ version 1 - Решение задачи 1
+	\ version 1 - Решение задачи 1 (расчет давления во всех точках расчетной сетки трубы )
 	\ date 11.03.2024
 */
 #include <iostream>
 #include <vector>
 #include <iomanip>
-#include <fixed/fixed.h>
+#include <fixed/fixed.h> 
 #include <pde_solvers/pde_solvers.h>
 #include "Input_struct.h"
 #include "Transport_equation.h"
-
+#include "Count_pressure_Eyler.h"
 
 
 int main()
@@ -41,12 +41,17 @@ int main()
 	/// @param j - счетчик слоев
 	int j = 0;
 	double sum_dt = 0;
+	/// @param Вектор распределения давления по трубе, [Па]
+	std::vector <double> pressure_current(input_data_task_1.n);
 	do {
 		Transport_equation transport_equation_task_1(input_data_task_1, j);
 		for (size_t i{ 0 }; i < num_parameters; i++) {
 			transport_equation_task_1.method_characteristic(buffer.current()[i], buffer.previous()[i], input_conditions[i]);
 		}
-		transport_equation_task_1.output_data(buffer, sum_dt);
+		/// Передаю текущий слой
+		Count_pressure_Eyler count_pressure_Eyler_task_1(input_data_task_1, buffer.previous()[0], buffer.previous()[1], pressure_current);
+		pressure_current = count_pressure_Eyler_task_1.count_pressure_Eyler();
+		transport_equation_task_1.output_data(buffer, sum_dt, pressure_current);
 		buffer.advance(1);
 		sum_dt += input_data_task_1.get_dt();
 		j++;
