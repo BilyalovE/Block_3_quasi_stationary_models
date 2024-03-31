@@ -35,7 +35,7 @@ vector <double> Count_pressure_Eyler_Task_1::count_pressure_Eyler()
 	pressure[0] = input_data_task_1.p0;
 	/// Получим вектор давлений в точках расчетной сетки на текущем слое
 	for (size_t i = 1; i < input_data_task_1.n; i++) {
-		pressure[i] = pressure[i - 1] + dx * (hydraulic_resistance[i - 1] / inner_d * density[i - 1] * pow(v, 2) / 2 - (input_data_task_1.zl - input_data_task_1.z0) /((input_data_task_1.n-1) * dx) * density[i - 1] * M_G);
+		pressure[i] = pressure[i - 1] - dx * (hydraulic_resistance[i - 1] / inner_d * density[i - 1] * pow(v, 2) / 2 - (input_data_task_1.zl - input_data_task_1.z0) /((input_data_task_1.n-1) * dx) * density[i - 1] * M_G);
 	}
 	return pressure;
 }
