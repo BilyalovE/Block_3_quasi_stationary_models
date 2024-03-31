@@ -28,9 +28,9 @@ struct Input_data {
 	/// @param Начальная вязкость сырья в трубе, [м2/с]
 	double initial_viscosity = 15e-6;
 	/// @param Длина трубопровода, [м]
-	double L = 500;
+	double L = 100000;
 	/// @param Число узлов расчетной сетки
-	int n = 5 + 1;
+	int n = 100 + 1;
 	
 	/// @brief Метод определения шага расчетной сетки (расстояние между узловыми точками), [м]
 	double get_dx() const {
@@ -39,7 +39,7 @@ struct Input_data {
 	/// @brief Метод определения шага расчетной сетки по времени, [с]
 	double get_dt() const {
 		double dx = get_dx();
-		return dx * v; 
+		return dx / v; 
 	}
 	/// @brief Метод расчета относительной шероховатости
 	double get_relative_roughness() const {

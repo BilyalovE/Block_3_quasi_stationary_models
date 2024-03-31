@@ -39,7 +39,7 @@ TEST(Block_3, Task_QP_1)
 	vector <double> input_conditions(num_parameters);
 	input_conditions = { density, viscosity };
 	/// @param Время моделирования
-	double T = 300;
+	double T = 200000;
 	/// @param j - счетчик слоев
 	int j = 0;
 	double sum_dt = 0;
@@ -64,8 +64,8 @@ TEST(Block_3, Task_QP_1)
 
 
 
-/// Задание 2. Задача QP. Учет различия временных сеток краевых условий и метода характеристик.
-TEST(Block_3, Task_QP_2) {
+/// Задание 01. Задача QP. Учет различия временных сеток краевых условий и метода характеристик.
+TEST(Block_3, Task_QP_01) {
 	/// Предполагаем, что в начальный момент времени всю трубу заполняют нефть с начальными параметрами initial_density, initial_viscosity
 	/// @param Структура параметров трубы задачи 2
 	Input_data input_data_task_2;
@@ -97,7 +97,7 @@ TEST(Block_3, Task_QP_2) {
 		Count_pressure_Eyler_Task_2 count_pressure_Eyler_task_2(input_data_task_2, synthetic_time_2, buffer.current()[0], buffer.current()[1]);
 		pressure_current = count_pressure_Eyler_task_2.count_pressure_Eyler(pressure_current, j, sum_dt);
 		/// Вывод данных
-		transport_equation_task_2.output_data("Output_task_2", buffer, sum_dt, pressure_current);
+		transport_equation_task_2.output_data("Output_task_01", buffer, sum_dt, pressure_current);
 		/// Увеличение временного шага метода характеристик
 		sum_dt += transport_equation_task_2.get_dt();
 		j++;
@@ -124,4 +124,4 @@ TEST(Block_3, Task_QP_2) {
 		buffer.advance(1);
 	} while (sum_dt <= T);
 }
- 
+
