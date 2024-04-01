@@ -185,15 +185,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Count_pressure_Eyler.cpp" />
+    <ClCompile Include="Count_pressure_Eyler_Task_1.cpp" />
+    <ClCompile Include="Count_pressure_Eyler_Task_2.cpp" />
     <ClCompile Include="Hydraulic_resistance_coefficient.cpp" />
-    <ClCompile Include="Task_QP_Eyler.cpp" />
     <ClCompile Include="Transport_equation.cpp" />
     <ClCompile Include="quasi_stationary_models.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Count_pressure_Eyler.h" />
+    <ClInclude Include="Count_pressure_Eyler_Task_1.h" />
+    <ClInclude Include="Count_pressure_Eyler_Task_2.h" />
     <ClInclude Include="Hydraulic_resistance_coefficient.h" />
+    <ClInclude Include="Time_series.h" />
     <ClInclude Include="Transport_equation.h" />
     <ClInclude Include="Input_struct.h" />
   </ItemGroup>
