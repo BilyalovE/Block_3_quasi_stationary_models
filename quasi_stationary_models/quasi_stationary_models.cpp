@@ -83,7 +83,7 @@ TEST(Block_3, Task_QP_01) {
 	vector <vector <double>> input_conditions(3, vector<double>(synthetic_time_2.density.size()));
 	input_conditions = { synthetic_time_2.density, synthetic_time_2.viscosity, synthetic_time_2.time_input_parties };
 	/// @param Время моделирования, [c]
-	double T = 4000;
+	double T = 200000;
 	/// @param j - счетчик слоев
 	int j = 0;
 	double sum_dt = 0;
